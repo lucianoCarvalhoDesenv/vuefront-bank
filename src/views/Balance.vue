@@ -38,7 +38,12 @@ export default {
           console.log(this.balance);
         }).catch(error => {
                 console.log(error);
-                alert("Unauthorized!");
+                 this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error,
+            });
+                
                 this.$router.push({path: '/login', }); 
               });
       },

@@ -20,6 +20,13 @@ import money from 'v-money'
 // register directive v-money and component <money>
 Vue.use(money, {precision: 4})
 
+import VueSweetalert2 from 'vue-sweetalert2';
+
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+Vue.use(VueSweetalert2);
+
 /*
 import { Datetime } from 'vue-datetime'
 // You need a specific loader for CSS files

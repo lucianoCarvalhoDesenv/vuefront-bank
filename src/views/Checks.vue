@@ -79,7 +79,7 @@
                 }"
               >
                 {{ item.type === "P" ? "-" : " " }} ${{
-                  item.amount
+                  parseFloat(item.amount).toFixed(2)
                 }}
               </div>
             </div>
@@ -155,7 +155,12 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          alert("Unauthorized!");
+           this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error,
+            });
+         
           this.$router.push({ path: "/login" });
         });
     },

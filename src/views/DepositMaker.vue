@@ -3,7 +3,7 @@
     <div class="bnb-total-amount" style="flex-direction: column">
       <div><p>Current Balance</p></div>
       <div>
-        <h1>${{ $v.form.balance.$model }}</h1>
+        <h1>${{ parseFloat($v.form.balance.$model).toFixed(2) }}</h1>
       </div>
     </div>
     <b-form @submit.stop.prevent="submit">
@@ -174,6 +174,9 @@ export default {
       })
         .then((response) => response.json())
         .then((res) => {
+            this.$swal.fire({
+              icon: 'success',
+            });
            this.$router.push({path: '/mychecks', });
           console.log(res);
         })
@@ -196,7 +199,7 @@ export default {
       })
         .then((response) => response.json())
         .then((res) => {
-          this.$v.form.balance.$model = res.balance;
+          this.$v.form.balance.$model =  res.balance;
           console.log(res.balance);
         });
     },

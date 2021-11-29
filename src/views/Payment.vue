@@ -3,7 +3,7 @@
     <div class="bnb-total-amount" style="flex-direction: column ;">
       <div><p>Current Balance</p></div>
       <div>
-        <h1>${{ $v.form.balance.$model }}</h1>
+        <h1>${{ parseFloat($v.form.balance.$model).toFixed(2) }}</h1>
       </div>
     </div>
     <b-form @submit.stop.prevent="submit">
@@ -146,12 +146,19 @@ export default {
       })
         .then((response) => response.json())
         .then((res) => {
+           this.$swal.fire({
+              icon: 'success',
+            });
           console.log(res);
           this.$router.push({ path: "/home" });
         })
         .catch((error) => {
           console.log(error);
-          alert("Unauthorized!");
+           this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error,
+            });
           this.$router.push({ path: "/login" });
         });
     },
@@ -169,11 +176,16 @@ export default {
       })
         .then((response) => response.json())
         .then((res) => {
-          this.$v.form.balance.$model = res.balance;
+          this.$v.form.balance.$model =  parseFloat(res.balance).toFixed(2) ;
           console.log(res.balance);
         })
         .catch((error) => {
           console.log(error);
+           this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error,
+            });
           //alert("Unauthorized!");
           //this.$router.push({ path: "/login" });
         });

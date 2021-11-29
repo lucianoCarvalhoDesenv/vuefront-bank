@@ -48,7 +48,7 @@
                 }"
               >
                 {{ item.type === "P" ? "-" : " " }} ${{
-                  item.amount.toFixed(2)
+                  parseFloat(item.amount).toFixed(2)
                 }}
               </div>
             </div>
@@ -110,7 +110,12 @@ export default {
           console.log(this.transaction);
         }).catch(error => {
                 console.log(error);
-                alert("Unauthorized!");
+                 this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error,
+            });
+                
                 this.$router.push({path: '/login', }); 
               });
       

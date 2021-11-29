@@ -114,7 +114,7 @@ export default {
       return !this.$v.form[field].$error;
     },
 
-     submit(){ 
+     submit(){  
                this.$v.$touch();
               if(this.$v.$error) {
                   return;
@@ -133,11 +133,18 @@ export default {
         .then( res => { 
             if( res.user !== undefined)
             {                
-                alert(res.message); 
+               
+                 this.$swal(res.message);
                 this.$router.push({path: '/login', });                
             }
           }).catch(error => {
-                  alert("Error on create: ", error);
+             
+            this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error,
+            });
+                
                 console.log(error);
               });
                 

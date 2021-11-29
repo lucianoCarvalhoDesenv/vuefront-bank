@@ -44,7 +44,7 @@
                 }"
               >
                 {{ item.type === "P" ? "-" : " " }} ${{
-                  item.amount
+                 parseFloat(item.amount).toFixed(2)
                 }}
               </div>
             </div>

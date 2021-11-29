@@ -4,7 +4,7 @@
       <div>
         <div><p>Current Balance</p></div>
         <div>
-          <h1>${{ balance }}</h1>
+          <h1>${{ parseFloat(balance).toFixed(2) }}</h1>
         </div>
       </div>
       <div class="action-button">
@@ -16,7 +16,7 @@
       <div>
         <div><p>Incomes</p></div>
         <div>
-          <h3>${{ incomes}}</h3>
+          <h3>${{  parseFloat(incomes).toFixed(2)}}</h3>
         </div>
       </div>
       <div class="action-button">
@@ -28,7 +28,7 @@
       <div>
         <div><p>Expenses</p></div>
         <div>
-          <h3>${{ expenses }}</h3>
+          <h3>${{ parseFloat(expenses).toFixed(2) }}</h3>
         </div>
       </div>
       <div class="action-button">
@@ -87,7 +87,7 @@
                 }"
               >
                 {{ item.type === "P" ? "-" : " " }} ${{
-                  item.amount
+                  parseFloat(item.amount).toFixed(2)
                 }}
               </div>
             </div>
@@ -134,7 +134,7 @@ export default {
             this.transactions[this.transactions.length - 1].balance_after;
           this.transactions.forEach((item) => {
             if (item.type == "P") this.expenses += item.amount;
-            else if (item.type == "D") this.incomes += item.amount;
+            else if (item.type == "D") this.incomes += parseFloat(item.amount).toFixed(2);
           });
           console.log(this.balance, this.expenses, this.incomes);
         })
@@ -142,6 +142,11 @@ export default {
           this.balance = 0;
           this.expenses = 0;
           this.incomes = 0;
+           this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error,
+            });
           console.log(error);
         });
     },
