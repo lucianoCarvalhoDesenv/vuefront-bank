@@ -48,7 +48,7 @@
                 }"
               >
                 {{ item.type === "P" ? "-" : " " }} ${{
-                  item.amount.toFixed(2)
+                  item.amount
                 }}
               </div>
             </div>

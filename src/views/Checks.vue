@@ -79,7 +79,7 @@
                 }"
               >
                 {{ item.type === "P" ? "-" : " " }} ${{
-                  item.amount.toFixed(2)
+                  item.amount
                 }}
               </div>
             </div>
@@ -171,7 +171,6 @@ export default {
 <style>
 .border-taps{
   border-style: none;
-  visibility: ;
 }
 .bd-placeholder-img {
   font-size: 1.125rem;

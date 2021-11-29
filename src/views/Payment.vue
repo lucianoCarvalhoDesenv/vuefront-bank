@@ -3,7 +3,7 @@
     <div class="bnb-total-amount" style="flex-direction: column ;">
       <div><p>Current Balance</p></div>
       <div>
-        <h1>${{ $v.form.balance.$model.toFixed(2) }}</h1>
+        <h1>${{ $v.form.balance.$model }}</h1>
       </div>
     </div>
     <b-form @submit.stop.prevent="submit">

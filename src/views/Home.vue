@@ -4,7 +4,7 @@
       <div>
         <div><p>Current Balance</p></div>
         <div>
-          <h1>${{ balance.toFixed(2) }}</h1>
+          <h1>${{ balance }}</h1>
         </div>
       </div>
       <div class="action-button">
@@ -16,7 +16,7 @@
       <div>
         <div><p>Incomes</p></div>
         <div>
-          <h3>${{ incomes.toFixed(2) }}</h3>
+          <h3>${{ incomes}}</h3>
         </div>
       </div>
       <div class="action-button">
@@ -28,7 +28,7 @@
       <div>
         <div><p>Expenses</p></div>
         <div>
-          <h3>${{ expenses.toFixed(2) }}</h3>
+          <h3>${{ expenses }}</h3>
         </div>
       </div>
       <div class="action-button">
@@ -87,7 +87,7 @@
                 }"
               >
                 {{ item.type === "P" ? "-" : " " }} ${{
-                  item.amount.toFixed(2)
+                  item.amount
                 }}
               </div>
             </div>
