@@ -7,10 +7,18 @@ import { BootstrapVue } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
+import VueMask from 'v-mask';
+Vue.use(VueMask);
+
 Vue.use(BootstrapVue);
 
 import Vuelidate from "vuelidate";
 Vue.use(Vuelidate);
+
+import money from 'v-money'
+ 
+// register directive v-money and component <money>
+Vue.use(money, {precision: 4})
 
 /*
 import { Datetime } from 'vue-datetime'

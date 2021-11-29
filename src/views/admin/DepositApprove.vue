@@ -1,127 +1,143 @@
 <template>
-    <main class="form-signin">
-        
-             <h1 class="">Deposit to Aprrove</h1>
+  <main>
+    <div class="bnb-total-amount" style="flex-direction: column">
+      <h3 class="mx-auto">CHECKS DETAIL</h3>
+    </div>
 
     <div id="app">
-   
-        {{transaction.id}}
-        {{transaction.description}}
-         {{transaction.date}}
-         {{transaction.type}}
-         {{transaction.amount}}
-         {{transaction.imgurl}}
+      <div class="check-detail">
+        <label class="mdi mdi-tag-facese"> &nbsp;&nbsp;Custumer</label>
+      </div>
+      <div class="check-detail">&nbsp;&nbsp; &nbsp;&nbsp;{{ user.name }}</div>
 
-         <img v-bind:src="`${transaction.imgurl}`">
+      <div class="check-detail">
+        <label class="mdi mdi-email"> &nbsp;&nbsp;Email</label>
+      </div>
+      <div class="check-detail">&nbsp;&nbsp; &nbsp;&nbsp;{{ user.email }}</div>
+
+      <div class="check-detail">
+        <label class="mdi mdi-human"> &nbsp;&nbsp;Account</label>
+      </div>
+      <div class="check-detail">
+        &nbsp;&nbsp; &nbsp;&nbsp;00001-00{{ user.ID }}
+      </div>
+
+      <div class="check-detail">
+        <label class="mdi mdi-cash-multiple"
+          >&nbsp;&nbsp; Reported Amount</label
+        >
+      </div>
+      <div class="check-detail">
+        &nbsp;&nbsp; &nbsp;&nbsp;{{ transaction.amount }}
+      </div>
+
+      <img v-bind:src="`${transaction.imgurl}`" />
+    </div>
+
+
+
+    <div class="mx-auto">
+      <v-btn  @click="reject" 
+       
+       class="ma-3" color="primary" dark>
         
-    </div>
+        <v-icon dark> mdi-close-circle </v-icon>
+        &nbsp;&nbsp;REJECT &nbsp;&nbsp;
+      </v-btn>
 
-    <div> 
+      <v-btn @click="accpet"
        
-    <v-btn @click="reject"
-    class="ma-2"
-      color="primary"
-      dark
-    >
-     REJECT
-    </v-btn>
-
-    <v-btn @click="accpet"
-    class="ma-2"
-      color="primary"
-      dark
-    >
-     ACCEPT
-    </v-btn>
-
-    
-    <button @click="reject">REJECT</button>
-    <button @click="accpet">ACCEPT</button>
+       class="ma-3" color="primary" dark>
+        <v-icon light> mdi-check </v-icon>
+         &nbsp;&nbsp;ACCEPT &nbsp;&nbsp;
+      </v-btn>
     </div>
-       
-<div class="nav">
-    <router-link to="/login"> addpayment </router-link>
-</div>
-</main>
+  </main>
 </template>
 
 <script>
-import endpoint_res from '../../resource/endpointresouce';
-import Cookie from 'js-cookie';
+import endpoint_res from "../../resource/endpointresouce";
+import Cookie from "js-cookie";
 
 export default {
-    name: 'DepositApprove',
-    data(){return {
-                  transaction: "",
-                  approved:"",
-                  };
-    },
-    methods: {
-      gettransactions(){ 
-         const token = Cookie.get('bank_token');
-    
-        fetch( endpoint_res.TRANSACTION_BY_ID_ENDPOINT + this.$route.params.id, { 
-          method:'GET',
-           headers: {
-              'Content-Type':'application/json' ,
-              'Access':'application/json',
-              'Authorization' :'Bearer '+token
-            }
-            
-        })
-        .then(response => response.json())
-        .then(res => {
-          this.transaction = res.data;
-          this.transaction.imgurl = endpoint_res.BASE_SERVER+this.transaction.imgurl;
+  name: "DepositApprove",
+  data() {
+    return {
+      transaction: "",
+      approved: "",
+      user: "",
+    };
+  },
+  methods: {
+    gettransactions() {
+      const token = Cookie.get("bank_token");
+
+      fetch(endpoint_res.TRANSACTION_BY_ID_ENDPOINT + this.$route.params.id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Access: "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          this.transaction = res.transaction;
+          this.transaction.imgurl =
+            endpoint_res.BASE_SERVER + this.transaction.imgurl;
+          this.user = res.user;
           console.log(this.transaction);
-        }); 
-      },
+        });
 
-      submit(){
-        const approvedata = {transaction: this.transaction, approved: this.approved};
-        const token = Cookie.get('bank_token');
-        fetch( endpoint_res.TRANSACTION_APPROVE_ENDPOINT, { 
-          method:'POST',
-           headers: {
-              'Content-Type':'application/json' ,
-              'Access':'application/json',
-              'Authorization' :'Bearer '+token
-            },
-            body: JSON.stringify(approvedata)
-        })
-        .then(response => response.json())
-        .then( res => { 
-          console.log(res)});
-      },
-      accpet(){
-          this.transaction =this.$route.params.id;
-          this.approved='Y';
-          this.submit();
-          this.$router.push({path: '/checkscontrol', }); 
-      },
-      reject(){
-          this.transaction =this.$route.params.id;
-          this.approved='N';
-          this.submit();
-          this.$router.push({path: '/checkscontrol', }); 
-      },
-  
-      
+      this.getuser();
     },
-    
-    beforeMount(){
-      this.gettransactions();
-     },
-}; 
 
+    submit() {
+      const approvedata = {
+        transaction: this.transaction,
+        approved: this.approved,
+      };
+      const token = Cookie.get("bank_token");
+      fetch(endpoint_res.TRANSACTION_APPROVE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Access: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(approvedata),
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          console.log(res);
+        });
+    },
+    accpet() {
+      this.transaction = this.$route.params.id;
+      this.approved = "Y";
+      this.submit();
+      this.$router.push({ path: "/checkscontrol" });
+    },
+    reject() {
+      this.transaction = this.$route.params.id;
+      this.approved = "N";
+      this.submit();
+      this.$router.push({ path: "/checkscontrol" });
+    },
+  },
+
+  async mounted() {
+    await this.gettransactions();
+  },
+};
 </script>
 
-
-
 <style>
-   .form-signin {
+.check-detail {
+  color: rgba(39, 153, 251, 255);
+}
+.form-signin {
   width: 100%;
-  max-width: 330px;
   padding: 15px;
   margin: auto;
 }
@@ -145,5 +161,4 @@ export default {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-
 </style>

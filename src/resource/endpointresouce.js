@@ -1,4 +1,5 @@
-const baseserver='https://turnvoverbnb-bank-api.herokuapp.com'
+//const baseserver='http://127.0.0.1:8000'
+ const baseserver='https://turnvoverbnb-bank-api.herokuapp.com'
 const baseurl=baseserver+'/api';
 
 const endpoint_res = {
@@ -12,7 +13,11 @@ const endpoint_res = {
     TRANSACTION_BY_ID_ENDPOINT: baseurl+"/transactionbyid?id=",
     TRANSACTION_APPROVE_ENDPOINT: baseurl+"/approve",
     EXPENSES_ENDPOINT: baseurl+"/expenses",
+    INCOMES_ENDPOINT: baseurl+"/incomes",
+    MY_CHECKS_ENDPOINT: baseurl+"/mychecks",
     DEPOSIT_ENDPOINT: baseurl+"/deposit",
-    PAYMENT_ENDPOINT: baseurl+"/payment"
+    PAYMENT_ENDPOINT: baseurl+"/payment",
+    BALANCE_ENDPOINT: baseurl+"/balance",
+    USER_BY_ID_ENDPOINT: baseurl+"/user/"
 };
 export default endpoint_res

@@ -40,7 +40,7 @@ an admin can see a list of pending check deposit pictures with amount and pictur
 <style>
    .form-signin {
   width: 100%;
-  max-width: 330px;
+  
   padding: 15px;
   margin: auto;
 }

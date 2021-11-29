@@ -1,52 +1,126 @@
 <template>
-    <main class="form-signin">
-        <div class="bnb-logo">
-             <h1 class="">BNB</h1>
-        </div>
-  <form @submit.stop.prevent="submit">
+
+   <main class="">
+    <div class="bnb-header">
+      <div><h1>BNB Bank</h1></div>
+    </div>
+     
+  <b-form @submit.stop.prevent="submit"
+  class="form-signin login-width">
+ 
+
+        <div class="form-floating">
+      <b-form-input  v-model.trim="$v.form.name.$model"
+                :state="getValidation('name')"
+                style="margin-bottom:30px;"
+                
+      type="text"
+      class="form-control rounded-pill"
+      id="floatingInput"
+      placeholder="name@example.com">
+      </b-form-input>
+      
+      <label for="floatingInput" style="color:#2799fb;">Username</label>
+    </div>
+
     <div class="form-floating">
-      <input v-model="name" 
-      type="text" class="form-control" id="username" placeholder="name@example.com">
-      <label for="floatingInput">Username</label>
+      <b-form-input  v-model.trim="$v.form.email.$model"
+                :state="getValidation('email')"
+                style="margin-bottom:30px;"
+                
+      type="email"
+      class="form-control rounded-pill"
+      id="floatingInput"
+      placeholder="name@example.com">
+      </b-form-input>
+      
+      <label for="floatingInput" style="color:#2799fb;">Email address</label>
     </div>
-    <div class="form-floating ">
-      <input v-model="email" 
-      type="email" class="form-control" id="email" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
+
+    <div class="form-floating">
+        <b-form-input
+          v-model.trim="$v.form.password.$model"
+                :state="getValidation('password')"
+                style="margin-bottom:30px"
+      type="password"
+       class="form-control rounded-pill" 
+       id="floatingPassword" 
+       placeholder="Password">
+      </b-form-input>
+      <label for="floatingPassword"
+      style="color:#2799fb;"
+      >Password</label>
     </div>
-    <div class="form-floating ">
-      <input v-model="password" 
-      type="password" class="form-control" id="Password" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
+
+    
 
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">SIGN UP</button>
-  
-  </form>
-<div class="nav">
-    <router-link to="/login"> Already have an account? </router-link>
-</div>
-    
+      <div style="margin-top:50px;
+      justify-text: center;
+  align-items: center;">
+
+     <router-link to="/login"> Already have an account? </router-link>
+    </div>
+  </b-form>
+
+
 </main>
 </template>
 
 <script>
 import endpoint_res from '../resource/endpointresouce';
+import { required, minLength, email,helpers } from "vuelidate/lib/validators";
+
+const alphaNumAndDotValidator = helpers.regex('alphaNumAndDot', /^[a-z\d.]*$/i);
+
 
 export default {
-    name: 'Register',
-    data(){return {
-                  name:'',
-                  email:'',
-                  password:'',
-                  password_confirmation:'',
-                  };
-    },
-    methods: {
-      submit(){ 
-        const logindata = {name:this.name, email: this.email, password: this.password , password_confirmation:this.password};
+  data() {
+    return {
+      form: {
+        name:"",
+        email: "",
+        password: ""
+      }
+    }
+  },
 
+  validations: {
+    form: {
+      email: {
+        required,
+        email
+      },
+
+      password: {
+        required,
+        minLength: minLength(4)
+      },
+       name: {
+        required,
+        minLength: minLength(4),
+        alphaNumAndDotValidator
+      },
+
+    }
+  },
+
+  methods: {
+  getValidation(field) {
+      if(this.$v.form.$dirty === false) {
+        return null;
+      }
+      return !this.$v.form[field].$error;
+    },
+
+     submit(){ 
+               this.$v.$touch();
+              if(this.$v.$error) {
+                  return;
+                }
+        const logindata = {name :this.$v.form.name.$model, email: this.$v.form.email.$model, password: this.$v.form.password.$model, password_confirmation:this.$v.form.password.$model };
+        console.log(logindata);
         fetch( endpoint_res.REGISTER_ENDPOINT, { 
           method:'POST',
            headers: {
@@ -62,45 +136,49 @@ export default {
                 alert(res.message); 
                 this.$router.push({path: '/login', });                
             }
-            else
-            {
-                alert("Error: "+res);
-            }
-
-          });
+          }).catch(error => {
+                  alert("Error on create: ", error);
+                console.log(error);
+              });
+                
       },
-  
-      
+    login() {
+      this.$v.$touch();
+      if(this.$v.$error) {
+        return;
+      }
+
+      alert("login");
     },
-};
+
+    register() {},
+
+  
+  }
+}
 </script>
 
 <style>
-   .form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
+ html,
+    body {
+      margin: 0;
+      height: 100%;
+    }
+
+    .bnb-header {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 10px;
+      height: 100px;
+      font-family: 20px;
+      background-color: #2799fb;
+      color: #ffffff;
+    }
+
+.login-width{
+max-width: 330px;
 }
 
-.form-signin .checkbox {
-  font-weight: 400;
-}
-
-.form-signin .form-floating:focus-within {
-  z-index: 2;
-}
-
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
 
 </style>

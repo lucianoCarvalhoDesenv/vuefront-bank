@@ -24,7 +24,7 @@ export default{
                     Cookie.set('type_bank',res.type);
                   } 
               }).catch(error => {
-                console.log('catch works e'+error);
+                console.log(error);
                 next('/login');
               });
 

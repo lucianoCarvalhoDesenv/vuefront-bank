@@ -9,6 +9,9 @@ import DepositMaker from '../views/DepositMaker.vue'
 import Payment from '../views/Payment.vue'
 import DepositApprove from '../views/admin/DepositApprove.vue'
 import ChecksControl from '../views/admin/ChecksControl.vue'
+import Incomes from '../views/Deposits.vue'
+import Checks from '../views/Checks.vue'
+import Balance from '../views/Balance.vue'
 
 
 Vue.use(VueRouter)
@@ -20,14 +23,37 @@ const routes = [
     component: Login
   },
   {
+    path: '/',
+    name: 'Register',
+    component: Register
+  },
+  {
     path: '/register',
     name: 'Register',
     component: Register
   },
   {
+    path: '/balance',
+    name: 'Balance',
+    component: Balance,
+    beforeEnter: Mauth.authCustumer,
+  },
+  {
     path: '/expenses',
     name: 'Expenses',
     component: Expenses,
+    beforeEnter: Mauth.authCustumer,
+  },
+  {
+    path: '/incomes',
+    name: 'Incomes',
+    component: Incomes,
+    beforeEnter: Mauth.authCustumer,
+  },
+  {
+    path: '/mychecks',
+    name: 'Checks',
+    component: Checks,
     beforeEnter: Mauth.authCustumer,
   },
   {
@@ -43,7 +69,7 @@ const routes = [
     beforeEnter: Mauth.authAdmin,
   },
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home,
     
