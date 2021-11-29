@@ -174,7 +174,7 @@ export default {
       })
         .then((response) => response.json())
         .then((res) => {
-           this.$router.push({path: '/home', });
+           this.$router.push({path: '/mychecks', });
           console.log(res);
         })
         .catch((error) => {

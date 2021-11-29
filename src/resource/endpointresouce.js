@@ -1,5 +1,5 @@
-//const baseserver='http://127.0.0.1:8000'
- const baseserver='https://turnvoverbnb-bank-api.herokuapp.com'
+// const baseserver='http://127.0.0.1:8000'
+const baseserver='https://turnvoverbnb-bank-api.herokuapp.com'
 const baseurl=baseserver+'/api';
 
 const endpoint_res = {

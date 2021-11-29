@@ -110,7 +110,7 @@ export default {
       },
 
       date: {},
-      balance: {},
+      balance: 0,
     },
   },
 
@@ -174,8 +174,8 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          alert("Unauthorized!");
-          this.$router.push({ path: "/login" });
+          //alert("Unauthorized!");
+          //this.$router.push({ path: "/login" });
         });
     },
 

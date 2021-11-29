@@ -95,7 +95,6 @@
               <v-fab-transition>
                 <v-btn
                 @click="addcheck"
-                  v-show="!hidden"
                   color="blue"
                   dark
                   absolute
@@ -112,7 +111,6 @@
 </template>
 
 <script>
-import $ from "jquery";
 import endpoint_res from "../resource/endpointresouce";
 import Cookie from "js-cookie";
 
@@ -162,17 +160,7 @@ export default {
         });
     },
   },
-  mounted() {
-    // Your JQuery code here
-    $(document).ready(function () {
-      $('a[data-bs-toggle="tab"]').on("shown.bs.tab", function (e) {
-        var activeTab = $(e.target).text(); // Get the name of active tab
-        var previousTab = $(e.relatedTarget).text(); // Get the name of previous active tab
-        $(".active-tab span").html(activeTab);
-        $(".previous-tab span").html(previousTab);
-      });
-    });
-  },
+
 
   beforeMount() {
     this.gettransactions();
