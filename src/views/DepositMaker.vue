@@ -198,11 +198,6 @@ export default {
         .then((res) => {
           this.$v.form.balance.$model = res.balance;
           console.log(res.balance);
-        })
-        .catch((error) => {
-          console.log(error);
-          alert("Unauthorized!");
-          this.$router.push({ path: "/login" });
         });
     },
   },

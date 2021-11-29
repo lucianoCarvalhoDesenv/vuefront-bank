@@ -3,7 +3,9 @@
     <div class="bnb-total-amount">
       <div>
         <div><p>Current Balance</p></div>
-        <div><h1>${{balance.toFixed(2)}}</h1></div>
+        <div>
+          <h1>${{ balance.toFixed(2) }}</h1>
+        </div>
       </div>
       <div class="action-button">
         <div>November, 2021</div>
@@ -13,17 +15,21 @@
     <div class="bnb-total-expense">
       <div>
         <div><p>Incomes</p></div>
-        <div><h3>${{incomes.toFixed(2)}}</h3></div>
+        <div>
+          <h3>${{ incomes.toFixed(2) }}</h3>
+        </div>
       </div>
       <div class="action-button">
         <v-icon style="color: rgba(39, 153, 251, 255)">mdi-plus</v-icon>
-         <router-link to="/depositadd">Deposit a check </router-link>
+        <router-link to="/depositadd">Deposit a check </router-link>
       </div>
     </div>
     <div class="bnb-total-income">
       <div>
         <div><p>Expenses</p></div>
-        <div><h3>${{expenses.toFixed(2)}}</h3></div>
+        <div>
+          <h3>${{ expenses.toFixed(2) }}</h3>
+        </div>
       </div>
       <div class="action-button">
         <v-icon style="color: rgba(39, 153, 251, 255)">mdi-plus</v-icon>
@@ -32,10 +38,6 @@
       </div>
     </div>
 
-
-    
-
-
     <div id="app">
       <div class="my-3 p-3 bg-body rounded shadow-sm">
         <div
@@ -43,11 +45,24 @@
           :key="item.id"
           class="d-flex text-muted pt-3 itemdisp"
         >
-          <svg v-if="item.type == 'P'" class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#e83e8c"/><text x="50%" y="50%" fill="#e83e8c" dy=".3em">32x32</text></svg>
+          <svg
+            v-if="item.type == 'P'"
+            class="bd-placeholder-img flex-shrink-0 me-2 rounded"
+            width="32"
+            height="32"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Placeholder: 32x32"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#e83e8c" />
+            <text x="50%" y="50%" fill="#e83e8c" dy=".3em">32x32</text>
+          </svg>
 
-  
-        
-          <svg v-else
+          <svg
+            v-else
             class="bd-placeholder-img flex-shrink-0 me-2 rounded"
             width="32"
             height="32"
@@ -64,9 +79,7 @@
 
           <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
             <div class="d-flex justify-content-between desc-text">
-              <strong class="text-primary"
-                > {{ item.description }}</strong
-              >
+              <strong class="text-primary"> {{ item.description }}</strong>
               <div
                 v-bind:class="{
                   ' payment': item.type == 'P',
@@ -95,7 +108,7 @@ export default {
   data() {
     return {
       transactions: "valor",
-      balance: "",
+      balance: 0,
       incomes: 0,
       expenses: 0,
       today: new Date().toLocaleString("en-US"),
@@ -124,11 +137,13 @@ export default {
             else if (item.type == "D") this.incomes += item.amount;
           });
           console.log(this.balance, this.expenses, this.incomes);
-        }) /*.catch(error => {
-                console.log(error);
-                alert("Unauthorized!");
-                this.$router.push({path: '/login', }); 
-              })*/;
+        })
+        .catch((error) => {
+          this.balance = 0;
+          this.expenses = 0;
+          this.incomes = 0;
+          console.log(error);
+        });
     },
   },
   getclass(property) {
